@@ -687,11 +687,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>#PHP序列化与序列化</p>
-<p>作者：H3h3QAQ</p>
-<p>##一、PHP序列化和反序列化</p>
-<p>###1.PHP反序列化：</p>
-<p><code>serialize()</code></p>
+                <h1 id="PHP序列化与序列化"><a href="#PHP序列化与序列化" class="headerlink" title="PHP序列化与序列化"></a>PHP序列化与序列化</h1><p>作者：H3h3QAQ</p>
+<h2 id="一、PHP序列化和反序列化"><a href="#一、PHP序列化和反序列化" class="headerlink" title="一、PHP序列化和反序列化"></a>一、PHP序列化和反序列化</h2><h3 id="1-PHP反序列化："><a href="#1-PHP反序列化：" class="headerlink" title="1.PHP反序列化："></a>1.PHP反序列化：</h3><p><code>serialize()</code></p>
 <p>将变量或者对象转换成字符串的过程，用于存储或传递PHP的值的过程种，同时不丢失其类型和结构</p>
 <p>常见的序列化字母表示及其含义：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">a <span class="token operator">-</span> <span class="token keyword">array</span>    <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">a</span><span class="token punctuation">:</span><span class="token operator">&lt;</span>n<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token operator">&lt;</span>key <span class="token number">1</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span>value <span class="token number">1</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">&lt;</span>key n<span class="token operator">&gt;</span><span class="token operator">&lt;</span>value n<span class="token operator">&gt;</span><span class="token punctuation">}</span>
@@ -746,8 +743,7 @@ s <span class="token operator">-</span> string   <span class="token operator">--
   	<span class="token function">string</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span> <span class="token double-quoted-string string">"protected"</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>####（1）各种魔术方法</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>：<span class="token comment">//析构函数当对象被销毁时会被自动调用</span>
+<h4 id="（1）各种魔术方法"><a href="#（1）各种魔术方法" class="headerlink" title="（1）各种魔术方法"></a>（1）各种魔术方法</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>：<span class="token comment">//析构函数当对象被销毁时会被自动调用</span>
 <span class="token function">__wakeup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment">//unserialize()时会被自动调用</span>
 <span class="token function">__invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment">//当尝试以调用函数的方法调用一个对象时，会被自动调用</span>
 <span class="token function">__call</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment">//在对象上下文中调用不可访问的方法时触发</span>
@@ -780,8 +776,7 @@ s <span class="token operator">-</span> string   <span class="token operator">--
 
 <p>每种存储引擎存储的内容格式：</p>
 <p><img src="https://i.loli.net/2021/08/24/2qIVl4jeL6mwSMg.png"></p>
-<p>###3.phar反序列化</p>
-<p>phar反序列化就是可以在不使用php函数unserialize()的前提下，进行反序列化，从而引起php对象注入漏洞</p>
+<h3 id="3-phar反序列化"><a href="#3-phar反序列化" class="headerlink" title="3.phar反序列化"></a>3.phar反序列化</h3><p>phar反序列化就是可以在不使用php函数unserialize()的前提下，进行反序列化，从而引起php对象注入漏洞</p>
 <p>phar文件的结构：</p>
 <pre class="line-numbers language-none"><code class="language-none">-stub：phar文件标识，前面内容不限，但是必须以__HALT_COMPILER();?&gt;来结尾，否则phar扩展将无法识别这个文件为phar文件
 -manifest：压缩文件的属性等信息，以序列化的形式储存自定义的meat-data，这里就是漏洞利用的关键点
@@ -928,8 +923,7 @@ s <span class="token operator">-</span> string   <span class="token operator">--
 
 <p><img src="https://i.loli.net/2021/08/24/olTV4wmYSr956LB.png"></p>
 <p>成功RCE</p>
-<p>####（2）session反序列化漏洞</p>
-<p>当网站序列化存储session与反序列化读取session方式不同时，就可能导致session反序列化漏洞的产生。一般都是以<code>php_serialize</code>序列化存储session，以PHP反序列化读取session，造成反序列化攻击</p>
+<h4 id="（2）session反序列化漏洞"><a href="#（2）session反序列化漏洞" class="headerlink" title="（2）session反序列化漏洞"></a>（2）session反序列化漏洞</h4><p>当网站序列化存储session与反序列化读取session方式不同时，就可能导致session反序列化漏洞的产生。一般都是以<code>php_serialize</code>序列化存储session，以PHP反序列化读取session，造成反序列化攻击</p>
 <p>例子：</p>
 <p>phpinfo：</p>
 <p><img src="https://i.loli.net/2021/08/24/C14l6r5eLQp2AmS.png"></p>
