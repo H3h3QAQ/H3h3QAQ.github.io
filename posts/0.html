@@ -724,8 +724,7 @@
 <pre class="line-numbers language-none"><code class="language-none">&lt;?php phpinfo(); ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>也是可以的</p>
-<p>##1.包含本地服务器的文件</p>
-<p>举一个例子，利用CTFSHOW的靶机</p>
+<h2 id="1-包含本地服务器的文件"><a href="#1-包含本地服务器的文件" class="headerlink" title="1.包含本地服务器的文件"></a>1.包含本地服务器的文件</h2><p>举一个例子，利用CTFSHOW的靶机</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
