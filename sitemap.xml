@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://h3h3qaq.github.io/posts/f676a4bd.html</loc>
+    
+    <lastmod>2021-11-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://h3h3qaq.github.io/posts/b0c48792.html</loc>
     
     <lastmod>2021-11-11</lastmod>
@@ -269,6 +276,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://h3h3qaq.github.io/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-CVE-2019-8362/</loc>
+    <lastmod>2021-11-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -280,6 +294,13 @@
   
   <url>
     <loc>https://h3h3qaq.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2021-11-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://h3h3qaq.github.io/categories/CVE%E5%A4%8D%E7%8E%B0/</loc>
     <lastmod>2021-11-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
