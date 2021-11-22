@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="Thinkphp &lt; 6.0.2 session id未作过滤导致getshell, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>孤独星球</title>
+    <title>Thinkphp &lt; 6.0.2 session id未作过滤导致getshell | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -447,12 +447,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013346.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">Thinkphp &lt; 6.0.2 session id未作过滤导致getshell</h1>
                 </div>
             </div>
         </div>
@@ -571,12 +571,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                <span class="chip bg-color">CVE漏洞复现</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                CVE复现
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -585,28 +598,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5
+                    672
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -624,7 +637,112 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                google-site-verification: google110e5e5e14c8dcf0.html
+                <h1 id="Thinkphp-lt-6-0-2-session-id未作过滤导致getshell"><a href="#Thinkphp-lt-6-0-2-session-id未作过滤导致getshell" class="headerlink" title="Thinkphp < 6.0.2 session id未作过滤导致getshell"></a>Thinkphp &lt; 6.0.2 session id未作过滤导致getshell</h1><h3 id="一、漏洞简介"><a href="#一、漏洞简介" class="headerlink" title="一、漏洞简介"></a>一、漏洞简介</h3><p>Thinkphp &lt; 6.0.2 session id未作过滤导致getshell</p>
+<h3 id="二、漏洞影响"><a href="#二、漏洞影响" class="headerlink" title="二、漏洞影响"></a>二、漏洞影响</h3><p>Thinkphp &lt; 6.0.2</p>
+<h3 id="三、漏洞分析"><a href="#三、漏洞分析" class="headerlink" title="三、漏洞分析"></a>三、漏洞分析</h3><p>6.0.1在设置<code>session id</code>时未对值进行<code>ctype_alnum()</code>校验，从而导致可以传入任意字符。</p>
+<p>看一下保存session是怎么写的</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+<span class="token punctuation">{</span>
+    <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">clearFlashData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token variable">$sessionId</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">empty</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">data</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">handler</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token variable">$sessionId</span><span class="token punctuation">,</span> <span class="token variable">$data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">handler</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token variable">$sessionId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">init</span> <span class="token operator">=</span> <span class="token boolean constant">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>先获取<code>sessionid</code>，然后作为参数传入<code> $this-&gt;handler-&gt;write($sessionId, $data)</code>,<code>$this-&gt;handler</code>在构造函数中被初始化</p>
+<p>跟进查看一下</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$name</span><span class="token punctuation">,</span> SessionHandlerInterface <span class="token variable">$handler</span><span class="token punctuation">,</span> <span class="token keyword">array</span> <span class="token variable">$serialize</span> <span class="token operator">=</span> <span class="token constant">null</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">name</span>    <span class="token operator">=</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+    <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">handler</span> <span class="token operator">=</span> <span class="token variable">$handler</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">empty</span><span class="token punctuation">(</span><span class="token variable">$serialize</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">serialize</span> <span class="token operator">=</span> <span class="token variable">$serialize</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看出<code>$handler</code>的类型是SessionHandlerInterface，全局发现这是一个接口，实现这个接口的类有两个，一个是File，一个是Cache。这里以File类为例，我们跟进它的<code>write()</code>方法</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">write</span><span class="token punctuation">(</span>string <span class="token variable">$sessID</span><span class="token punctuation">,</span> string <span class="token variable">$sessData</span><span class="token punctuation">)</span><span class="token punctuation">:</span> bool
+<span class="token punctuation">{</span>
+    <span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token variable">$sessID</span><span class="token punctuation">,</span> <span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$data</span>     <span class="token operator">=</span> <span class="token variable">$sessData</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">config</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'data_compress'</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">function_exists</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'gzcompress'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">//数据压缩</span>
+        <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">gzcompress</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token variable">$data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里先通过第一个参数（也就是session id）来构造$filename，然后判断是否需要对session数据进行压缩，默认是不需要的，最后return时调用$this-&gt;writeFile()。先看看文件名是如何构造的，跟进$this-&gt;getFileName()</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">protected</span> <span class="token keyword">function</span> <span class="token function">getFileName</span><span class="token punctuation">(</span>string <span class="token variable">$name</span><span class="token punctuation">,</span> bool <span class="token variable">$auto</span> <span class="token operator">=</span> <span class="token boolean constant">false</span><span class="token punctuation">)</span><span class="token punctuation">:</span> string
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">config</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'prefix'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">config</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'prefix'</span><span class="token punctuation">]</span> <span class="token punctuation">.</span> <span class="token constant">DIRECTORY_SEPARATOR</span> <span class="token punctuation">.</span> <span class="token single-quoted-string string">'sess_'</span> <span class="token punctuation">.</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'sess_'</span> <span class="token punctuation">.</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">config</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'path'</span><span class="token punctuation">]</span> <span class="token punctuation">.</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> <span class="token variable">$filename</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里直接将第一个参数拼接到路径的最后。跟进之前的$this-&gt;writeFile()方法</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">protected</span> <span class="token keyword">function</span> <span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">:</span> bool
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>bool<span class="token punctuation">)</span> <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">,</span> <span class="token constant">LOCK_EX</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里用到了<code>file_put_contents()</code>保存文件，但是程序未对session id进行危险字符判断。</p>
+<p>所以我们可以利用该漏洞来写入<code>webshell.php</code></p>
+<p>继续往下看</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">,</span> Closure <span class="token variable">$next</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Session初始化</span>
+    <span class="token variable">$varSessionId</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">app</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">config</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'session.var_session_id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$cookieName</span>   <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">session</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$varSessionId</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token variable">$varSessionId</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$sessionId</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token variable">$varSessionId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token variable">$sessionId</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">cookie</span><span class="token punctuation">(</span><span class="token variable">$cookieName</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$sessionId</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">session</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token variable">$sessionId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+	 	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里的<code>$sessionId</code>的值由<code>$request-&gt;cookie($cookieName)</code>获得，<code>$cookieName</code>经过跟进后发现默认是PHPSESSID</p>
+<p><img src="https://i.loli.net/2021/11/22/94JHfbTUBdLmWwO.png" alt="1"></p>
+<p>所以我们可以设置Cookie中的PHPSESSID的值为xxxxx.php</p>
+<h3 id="四、漏洞复现"><a href="#四、漏洞复现" class="headerlink" title="四、漏洞复现"></a>四、漏洞复现</h3><p>复现之前我们需要开启session</p>
+<p>在<code>\app\middleaware.php</code>中把<code>\think\middleware\SessionInit::class</code>注释取消</p>
+<p><img src="https://i.loli.net/2021/11/22/WxMvc3BH5rlekSK.png" alt="2"></p>
+<p>然后在<code>\app\controller\index.php</code>中加入入口</p>
+<p><img src="https://i.loli.net/2021/11/22/FnbXveG3z5m4d9D.png" alt="3"></p>
+<p>然后bp抓包，构造poc</p>
+<p><img src="https://i.loli.net/2021/11/22/tywnMGX7xaop9BY.png" alt="4"></p>
+<p>发现写入成功了，访问一下写入的文件</p>
+<p><img src="https://i.loli.net/2021/11/22/46VM8OIj5ScA3K1.png" alt="5"></p>
+<h3 id="五、漏洞复现"><a href="#五、漏洞复现" class="headerlink" title="五、漏洞复现"></a>五、漏洞复现</h3><p>1、对session id 加一个过滤，使用ctype_alnum()</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">id</span> <span class="token operator">=</span> <span class="token function">is_string</span><span class="token punctuation">(</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">32</span> ctype_alnum（<span class="token variable">$id</span>） <span class="token operator">&amp;&amp;</span> <span class="token operator">?</span> <span class="token variable">$id</span> <span class="token punctuation">:</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token function">microtime</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token function">session_create_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2、更新Thinkphp版本</p>
+
                 
             </div>
             <hr/>
@@ -650,7 +768,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://h3geeker.top/google1xxxxxxx0.html">http://h3geeker.top/google1xxxxxxx0.html</a>
+                    <a href="http://h3geeker.top/posts/d1a4aa03.html">http://h3geeker.top/posts/d1a4aa03.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,7 +805,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                    <span class="chip bg-color">CVE漏洞复现</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -860,13 +982,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/d1a4aa03.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013346.png" class="responsive-img" alt="Thinkphp &lt; 6.0.2 session id未作过滤导致getshell">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Thinkphp &lt; 6.0.2 session id未作过滤导致getshell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -877,17 +999,29 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-22
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CVE%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                    CVE复现
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CVE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">CVE漏洞复现</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -895,16 +1029,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/google1xxxxxxx0.html">
+                <a href="/posts/a0ce185.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021815.jpg" class="responsive-img" alt="">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020152.jpg" class="responsive-img" alt="PHP不死马初探">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">PHP不死马初探</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -915,17 +1049,28 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-22
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">网络安全</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
