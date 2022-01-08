@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="听听音乐, CTFer 网络安全 渗透测试">
+    <meta name="keywords" content="安“战疫”网络安全卫士守护赛 部分wp, CTFer 网络安全 渗透测试">
     <meta name="description" content="本科 | 软件工程 | 网络安全">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>听听音乐 | 孤独星球</title>
+    <title>安“战疫”网络安全卫士守护赛 部分wp | 孤独星球</title>
 
     <link rel="icon" type="image/jpeg" href="https://i.loli.net/2021/11/10/guPx1Olpo6HIYai.jpg">
 
@@ -447,12 +447,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013951.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021332.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">听听音乐</h1>
+                    <h1 class="description center-align post-title">安“战疫”网络安全卫士守护赛 部分wp</h1>
                 </div>
             </div>
         </div>
@@ -571,12 +571,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%A4%A7%E8%B5%9Bwp/">
+                                <span class="chip bg-color">大赛wp</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/wp/" class="post-category">
+                                wp
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -585,28 +598,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-07-19
+                    2022-01-08
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-10
+                    2022-01-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    637
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -624,7 +637,100 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h3 id="八卦迷宫"><a href="#八卦迷宫" class="headerlink" title="八卦迷宫"></a>八卦迷宫</h3><p>折磨！！！！</p>
+<p>cazy{zhanchangyangchangzhanyanghechangshanshananzhanyiyizhanyianyichanganyang}</p>
+<h3 id="RCE-No-Para"><a href="#RCE-No-Para" class="headerlink" title="RCE_No_Para"></a>RCE_No_Para</h3><p>PHP无参数RCE</p>
+<p>参考自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38154820/article/details/106329976">https://blog.csdn.net/qq_38154820/article/details/106329976</a></p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token single-quoted-string string">';'</span> <span class="token operator">===</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'/[^\W]+\((?R)?\)/'</span><span class="token punctuation">,</span> <span class="token single-quoted-string string">''</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'code'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>代码会将$_GET[‘code’]中满足正则/[^\W]+((?R)?)/的部分，替换为空，然后查看是否剩下的部分强等于,如果满足，则执行</p>
+<p>第二层bypass</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'/session|end|next|header|dir/i'</span><span class="token punctuation">,</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'code'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>对几个关键词进行了过滤</p>
+<p>发现end被过滤了</p>
+<p>所以用array_rand()函数代替end()</p>
+<p>payload为：</p>
+<pre class="line-numbers language-none"><code class="language-none">/?code=eval(array_rand(current(get_defined_vars())));&amp;system("ls");<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/01/08/DJIfQdEVTiPzC7v.png"></p>
+<p>发现了php</p>
+<p>直接cat 即可</p>
+<p><img src="https://s2.loli.net/2022/01/08/NnwUglGisVBe264.png"></p>
+<h3 id="西安加油"><a href="#西安加油" class="headerlink" title="西安加油"></a>西安加油</h3><p>一到流量题</p>
+<p>看了一下没发现什么</p>
+<p>导出全部的http对象</p>
+<p>发现了两个文件</p>
+<p><img src="https://s2.loli.net/2022/01/08/WAntKrpksTbmM9d.png"></p>
+<p>把两个txt文本的内容都放到CyberChef解码</p>
+<p><img src="https://s2.loli.net/2022/01/08/cxMDX5sYupUayzk.png"></p>
+<p><img src="https://s2.loli.net/2022/01/08/fsHTpdNxKIFvqEX.png"></p>
+<p>看起来secret.txt是压缩包，推断压缩包中的内容就是图片</p>
+<p>还原压缩包文件</p>
+<p><img src="https://s2.loli.net/2022/01/08/RHc465huAxiWVrY.png"></p>
+<p>按照提示的内容拼图</p>
+<p><img src="https://s2.loli.net/2022/01/08/hesGt32oVQIiUqc.png"></p>
+<p>flag： cazy{make_XiAN_great_Again} </p>
+<h3 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro?"></a>Shiro?</h3><p>一开始以为是shiro</p>
+<p>就利用shiro attack</p>
+<p><img src="https://s2.loli.net/2022/01/08/BQAcfz9mqw4WNRS.png"></p>
+<p>但是发现并能干什么，只能执行几个命令（这个莫名的jar也是很可疑）</p>
+<p>此时我随便输入用户名密码 发现都是ok</p>
+<p><img src="https://s2.loli.net/2022/01/08/QptC7ZIcwTjFEOK.png"></p>
+<p>此时高度怀疑log4jRCE</p>
+<p>然后尝试了一下反弹shell，发现有过滤，但是不知道什么过滤</p>
+<p><img src="https://s2.loli.net/2022/01/08/2cOmrPCE1ST7dbt.png"></p>
+<p>经过测试发现是<code>jndi</code>被过滤了，而且可以大小写绕过</p>
+<p>直接Log4j干他！</p>
+<p><img src="https://s2.loli.net/2022/01/08/P36gzBRG7li1eC4.png"></p>
+<h3 id="朴实无华的取证"><a href="#朴实无华的取证" class="headerlink" title="朴实无华的取证"></a>朴实无华的取证</h3><p>确实朴实无华</p>
+<p>文件名给了系统信息直接vol取证</p>
+<p>先看一下内存里有什么文件 （贴一下经过我筛选的文件）</p>
+<pre class="line-numbers language-none"><code class="language-none">0x0000000001b301c0      1      0 RW-r-- \Device\HarddiskVolume1\Documents and Settings\Administrator\桌面\我的日记.txt.txt
+0x0000000001b34f90      1      1 R--r-- \Device\HarddiskVolume1\Documents and Settings\Administrator\桌面\flag.zip
+0x0000000001e65028      1      0 R--rw- \Device\HarddiskVolume1\Documents and Settings\Administrator\桌面\flag.png<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>分别打开看一下</p>
+<p>flag.png</p>
+<p>一串意义不明的字符串以及出题人美画！</p>
+<p><img src="https://s2.loli.net/2022/01/08/362KXUGQF7ZrLlR.png"></p>
+<p>flag.zip</p>
+<p><img src="https://s2.loli.net/2022/01/08/ZWKlEIropSTzvNb.png"></p>
+<p>加密过的一个压缩包</p>
+<p>我的日记.txt</p>
+<p><img src="https://s2.loli.net/2022/01/08/ZjELcBiQx4Wegsw.png"></p>
+<p>这里给了部分的加密脚本</p>
+<p>图片中的字符串</p>
+<pre class="line-numbers language-none"><code class="language-none">FDCB[8LDQ?ZLOO?FHUWDLQOB?VXFFHHG?LQ?ILJKWLQJ?WKH?HSLGHPLF]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/01/08/hNyvTqMF9p65xSK.png"></p>
+<p>凯撒了一下，发现有蹊跷在里面</p>
+<p>此时我们可以判断这个加密是加密脚本+凯撒</p>
+<p>剩下的就是测试找规律</p>
+<p>贴一下exp</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">"FDCB[8LDQ?ZLOO?FHUWDLQOB?VXFFHHG?LQ?ILJKWLQJ?WKH?HSLGHPLF]"</span>
+<span class="token builtin">str</span> <span class="token operator">=</span> <span class="token punctuation">[</span>a <span class="token keyword">for</span> a <span class="token keyword">in</span> <span class="token builtin">str</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> a <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token builtin">len</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">32</span><span class="token punctuation">)</span>
+<span class="token comment">#fdcb{Xldq_zloo_fhuwdlqob_vxffhhg_lq_iljkwlqj_wkh_hslghplf}</span>
+
+<span class="token keyword">for</span> a <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token builtin">len</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> <span class="token string">"d"</span> <span class="token keyword">and</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">&lt;=</span><span class="token string">"z"</span><span class="token punctuation">:</span>
+        <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'a'</span><span class="token punctuation">:</span>
+        <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'x'</span>
+    <span class="token keyword">elif</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'b'</span><span class="token punctuation">:</span>
+        <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'y'</span>
+    <span class="token keyword">elif</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'c'</span><span class="token punctuation">:</span>
+        <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'z'</span>
+    <span class="token keyword">elif</span> <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'|'</span><span class="token punctuation">:</span>
+        <span class="token builtin">str</span><span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"_"</span>
+<span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>
+<span class="token comment">#cazy{Xian_will_certainly_succeed_in_fighting_the_epidemic}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/01/08/RcFXkqvoT1SJVCb.png"></p>
+
                 
             </div>
             <hr/>
@@ -650,7 +756,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://h3geeker.top/List/tools/index.html">http://h3geeker.top/List/tools/index.html</a>
+                    <a href="http://h3geeker.top/posts/ad0903e.html">http://h3geeker.top/posts/ad0903e.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,7 +793,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%A4%A7%E8%B5%9Bwp/">
+                                    <span class="chip bg-color">大赛wp</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -860,13 +970,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/List/tools/index.html">
+                <a href="/posts/ad0903e.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013951.jpg" class="responsive-img" alt="听听音乐">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928021332.jpg" class="responsive-img" alt="安“战疫”网络安全卫士守护赛 部分wp">
                         
-                        <span class="card-title">听听音乐</span>
+                        <span class="card-title">安“战疫”网络安全卫士守护赛 部分wp</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -877,17 +987,29 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-08
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%A7%E8%B5%9Bwp/">
+                        <span class="chip bg-color">大赛wp</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -895,16 +1017,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/List/tools/index.html">
+                <a href="/posts/54f35dc.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928013951.jpg" class="responsive-img" alt="听听音乐">
+                        <img src="https://cdn.jsdelivr.net/gh/LuckyZmj/imgbed@master/posts/20200928020704.jpg" class="responsive-img" alt="2021SCTF-Loginme">
                         
-                        <span class="card-title">听听音乐</span>
+                        <span class="card-title">2021SCTF-Loginme</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -915,17 +1037,28 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-28
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            H3h3QAQ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%A7%E8%B5%9Bwp/">
+                        <span class="chip bg-color">大赛wp</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
