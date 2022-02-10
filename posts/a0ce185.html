@@ -40,9 +40,9 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="孤独星球" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="孤独星球" type="application/atom+xml">
 </head>
 
 
@@ -637,7 +637,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="什么是不死马"><a href="#什么是不死马" class="headerlink" title="什么是不死马"></a>什么是不死马</h1><p><strong>内存马</strong>，通俗讲就是不死马，就是会运行一段永远不退出的程序常驻在PHP进程里，无限执行。</p>
+                <link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="什么是不死马"><a href="#什么是不死马" class="headerlink" title="什么是不死马"></a>什么是不死马</h1><p><strong>内存马</strong>，通俗讲就是不死马，就是会运行一段永远不退出的程序常驻在PHP进程里，无限执行。</p>
 <h4 id="流程大概为："><a href="#流程大概为：" class="headerlink" title="流程大概为："></a>流程大概为：</h4><p><code>不死马.php</code>–&gt;<code>上传到服务器</code>–&gt;<code>服务器执行</code>–&gt;<code>在服务器上循环生成</code></p>
 <p>用以上流程达到不死的效果</p>
 <h4 id="可用的php函数"><a href="#可用的php函数" class="headerlink" title="可用的php函数"></a>可用的php函数</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token number">1.</span><span class="token function">ignore_user_abort</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">--</span><span class="token operator">&gt;</span>函数设置与客户机断开是否会终止脚本的执行。这里设置为<span class="token boolean constant">true</span>则忽略与用户的断开，即使与客户机断开脚本仍会执行。

@@ -40,9 +40,9 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="孤独星球" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="孤独星球" type="application/atom+xml">
 </head>
 
 
@@ -637,7 +637,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、SSTi服务器端模板注入的概念"><a href="#一、SSTi服务器端模板注入的概念" class="headerlink" title="一、SSTi服务器端模板注入的概念"></a>一、SSTi服务器端模板注入的概念</h1><p>SSTI服务器端模板注入(Server-Side Template Injection)，我们常见的注入有我们熟悉的SQL注入，两者的不通之处就是SSTI利用的是现在的网站模板引擎(下面会提到)，主要针对python、php、java的一些网站处理框架，比如Python的jinja2 mako tornado django，php的smarty twig，java的jade velocity，而两者的相同部分就是先从用户处获得值作为web应用模板内容的一部分，然后进行编译渲染，如果在其中用户插入了恶意内容，就可能导致一系列的不良后果，比如RCE、信息泄露、getshell等等（凡是使用模板的地方都可能会出现 SSTI 的问题，SSTI 不属于任何一种语言，沙盒绕过也不是，沙盒绕过只是由于模板引擎发现了很大的安全漏洞，然后模板引擎设计出来的一种防护机制，不允许使用没有定义或者声明的模块，这适用于所有的模板引擎，本文针对Python做主要学习）</p>
+                <link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一、SSTi服务器端模板注入的概念"><a href="#一、SSTi服务器端模板注入的概念" class="headerlink" title="一、SSTi服务器端模板注入的概念"></a>一、SSTi服务器端模板注入的概念</h1><p>SSTI服务器端模板注入(Server-Side Template Injection)，我们常见的注入有我们熟悉的SQL注入，两者的不通之处就是SSTI利用的是现在的网站模板引擎(下面会提到)，主要针对python、php、java的一些网站处理框架，比如Python的jinja2 mako tornado django，php的smarty twig，java的jade velocity，而两者的相同部分就是先从用户处获得值作为web应用模板内容的一部分，然后进行编译渲染，如果在其中用户插入了恶意内容，就可能导致一系列的不良后果，比如RCE、信息泄露、getshell等等（凡是使用模板的地方都可能会出现 SSTI 的问题，SSTI 不属于任何一种语言，沙盒绕过也不是，沙盒绕过只是由于模板引擎发现了很大的安全漏洞，然后模板引擎设计出来的一种防护机制，不允许使用没有定义或者声明的模块，这适用于所有的模板引擎，本文针对Python做主要学习）</p>
 <pre class="line-numbers language-none"><code class="language-none">服务端-&gt;模板文件-&gt;模板引擎-&gt;用户端<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://i.loli.net/2021/09/27/7nlOTi5oteyqwaC.png"></p>
