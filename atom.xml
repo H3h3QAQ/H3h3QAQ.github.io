@@ -6,7 +6,7 @@
   <link href="http://h3geeker.top/atom.xml" rel="self"/>
   
   <link href="http://h3geeker.top/"/>
-  <updated>2022-01-10T02:03:16.000Z</updated>
+  <updated>2022-02-10T14:29:21.193Z</updated>
   <id>http://h3geeker.top/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>新环境测试</title>
+    <link href="http://h3geeker.top/posts/f174be1.html"/>
+    <id>http://h3geeker.top/posts/f174be1.html</id>
+    <published>2022-02-10T14:28:36.390Z</published>
+    <updated>2022-02-10T14:29:21.193Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>测试</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>【萌新向】渗透测试靶场考核</title>
