@@ -6,7 +6,7 @@
   <link href="http://h3geeker.top/atom.xml" rel="self"/>
   
   <link href="http://h3geeker.top/"/>
-  <updated>2022-03-26T04:38:07.333Z</updated>
+  <updated>2022-04-18T07:49:12.988Z</updated>
   <id>http://h3geeker.top/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【XCTF】第四期个人能力认证考核个人wp</title>
+    <link href="http://h3geeker.top/posts/925c2943.html"/>
+    <id>http://h3geeker.top/posts/925c2943.html</id>
+    <published>2022-04-16T02:24:13.914Z</published>
+    <updated>2022-04-18T07:49:12.988Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="Grey"><a href="#Grey" class="headerlink" title="Grey"></a><strong>Grey</strong></h1><p>修改图片长度，然后用<code>Stegsolve</code>，在Alpha3通道可以看到两段flag</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416102615441.png" alt="image-20220416102615441"></p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416103218719.png" alt="image-20220416103218719"></p><p>然后在010末尾可以看到<code>m3_1F</code></p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416175407419.png" alt="image-20220416175407419"></p><p>连起来，flag：*<strong>CTF{Catch_m3_1F_y0u_cAn}</strong></p><h1 id="oh-my-grafana"><a href="#oh-my-grafana" class="headerlink" title="oh-my-grafana"></a><strong>oh-my-grafana</strong></h1><p>CVE-2021-43798，Grafana任意文件读取漏洞</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416124417171.png" alt="image-20220416124417171"></p><p>读取Grafana配置文件拿到用户名，密码，登陆</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416124641654.png" alt="image-20220416124641654"></p><p>登陆后发现注入点，尝试注入，发现毫无过滤。。。直接一把梭</p><p>select group_concat(table_name) from information_schema.tables where table_schema = database()</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416124203340.png" alt="image-20220416124203340"></p><p>select group_concat(column_name) from information_schema.columns where table_schema = database()</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416124230587.png" alt="image-20220416124230587"></p><p>select flag from fffffflllllllllaaaagggggg</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416124251947.png" alt="image-20220416124251947"></p><p>flag：*ctf{Upgrade_your_grafAna_now!}</p><h1 id="babyweb"><a href="#babyweb" class="headerlink" title="babyweb"></a><strong>babyweb</strong></h1><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416150613705.png" alt="image-20220416150613705"></p><p>这里能够请求资源，尝试请求本地资源发现有waf</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416150658067.png" alt="image-20220416150658067"></p><p>题目告诉了flag在/flag中</p><p><img src="/Users/h3h3qaq/Documents/CTF%E6%AF%94%E8%B5%9B/*CTF/image-20220416150741394.png" alt="image-20220416150741394"></p><p>访问提示需要ip为127.0.0.1，也就是内网ip</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416150821029.png" alt="image-20220416150821029"></p><p>第一反应想的是，写一个js，读取flag，并且弹出来</p><p>尝试不行，因为还是前端请求，随即想到了302跳转的方法</p><p>主页给了下载资源的地方，在自己的vps上用php写一个302跳转，并且起一个php服务（php -S port）</p><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token function">header</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"location:http://127.0.0.1:8089/flag"</span><span class="token punctuation">)</span><span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>然后让服务端请求你的跳转，跳转到<code>http://127.0.0.1:8089/flag</code>，这时候就是内网资源请求，成功完成一次服务端请求伪造</p><p>然后访问下载到的资源，成功拿到flag</p><p><img src="https://raw.githubusercontent.com/H3h3QAQ/img/main/images/image-20220416151257643.png" alt="image-20220416151257643"></p><p>flag：*ctf{A_Easy_SSRF_YOU_KNOW}</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="wp" scheme="http://h3geeker.top/categories/wp/"/>
+    
+    
+    <category term="大赛wp" scheme="http://h3geeker.top/tags/%E5%A4%A7%E8%B5%9Bwp/"/>
+    
+  </entry>
   
   <entry>
     <title>POP链初探</title>
