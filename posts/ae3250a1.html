@@ -561,7 +561,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-05
+                    2022-09-13
                 </div>
                 
 
@@ -593,7 +593,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="PHP序列化与序列化"><a href="#PHP序列化与序列化" class="headerlink" title="PHP序列化与序列化"></a>PHP序列化与序列化</h1><p>作者：H3h3QAQ</p>
+                <h1 id="PHP序列化与序列化"><a href="#PHP序列化与序列化" class="headerlink" title="PHP序列化与序列化"></a>PHP序列化与序列化</h1><p>作者：H3h3QAQ</p>
 <p>本文首发在</p>
 <h2 id="一、PHP序列化和反序列化"><a href="#一、PHP序列化和反序列化" class="headerlink" title="一、PHP序列化和反序列化"></a>一、PHP序列化和反序列化</h2><h3 id="1-PHP反序列化："><a href="#1-PHP反序列化：" class="headerlink" title="1.PHP反序列化："></a>1.PHP反序列化：</h3><p><code>serialize()</code></p>
 <p>将变量或者对象转换成字符串的过程，用于存储或传递PHP的值的过程种，同时不丢失其类型和结构</p>
@@ -708,8 +708,7 @@ s <span class="token operator">-</span> string   <span class="token operator">--
 
 
 
-<p>##二、反序列化漏洞</p>
-<h3 id="1-反序列化成因"><a href="#1-反序列化成因" class="headerlink" title="1.反序列化成因"></a>1.反序列化成因</h3><p>主要是反序列化过程中某些参数可控，传入构造的字符串，从而控制内部的变量设置函数，执行想要的操作</p>
+<h2 id="二、反序列化漏洞"><a href="#二、反序列化漏洞" class="headerlink" title="二、反序列化漏洞"></a>二、反序列化漏洞</h2><h3 id="1-反序列化成因"><a href="#1-反序列化成因" class="headerlink" title="1.反序列化成因"></a>1.反序列化成因</h3><p>主要是反序列化过程中某些参数可控，传入构造的字符串，从而控制内部的变量设置函数，执行想要的操作</p>
 <h4 id="（1）phar反序列化漏洞造成原因"><a href="#（1）phar反序列化漏洞造成原因" class="headerlink" title="（1）phar反序列化漏洞造成原因"></a>（1）phar反序列化漏洞造成原因</h4><p>漏洞出发点在使用<code>phar://</code>协议读取文件的时候，文件内容黑背解析成为phar对象，然后phar对象内的Meta-data信息会被反序列化。当内核调用phar_parse_metadata()解析met-adata数据时，会调用php_var_unserialize()对其进行反序列化操作，因此会造成漏洞</p>
 <h3 id="2-反序列化漏洞"><a href="#2-反序列化漏洞" class="headerlink" title="2.反序列化漏洞"></a>2.反序列化漏洞</h3><h4 id="（1）PHP反序列化漏洞"><a href="#（1）PHP反序列化漏洞" class="headerlink" title="（1）PHP反序列化漏洞"></a>（1）PHP反序列化漏洞</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
 <span class="token function">highlight_string</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'exam_day1.php'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
